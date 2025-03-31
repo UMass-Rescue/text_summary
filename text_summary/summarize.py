@@ -34,7 +34,7 @@ def process_files(model: str, input_dir: str, output_dir: str) -> None:
 
             output_file = output_path / (file_path.stem + ".txt")
             output_file.write_text(summary, encoding="utf-8")
-            processed_files.add(file_path.name)
+            processed_files.add(str(output_file))
             logger.info(f"Processed: {file_path.name} -> {output_file.name}")
         except Exception as e:
             logger.error(f"Error processing {file_path.name}: {e}")
