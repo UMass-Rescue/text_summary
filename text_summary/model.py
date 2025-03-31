@@ -9,6 +9,7 @@ SUPPORTED_MODELS = [
     "llama3.2:3b",
 ]
 
+
 def extract_response_after_think(text: str) -> str:
     """
     Extracts and returns the text after the </think> tag.
@@ -20,7 +21,9 @@ def extract_response_after_think(text: str) -> str:
 
 def ensure_model_exists(model: str) -> None:
     if model not in SUPPORTED_MODELS:
-        raise ValueError(f"Model '{model}' is not supported. Supported models are: {SUPPORTED_MODELS}")
+        raise ValueError(
+            f"Model '{model}' is not supported. Supported models are: {SUPPORTED_MODELS}"
+        )
     response = ollama.pull(model)
     if response.status != "success":
         raise RuntimeError(f"Failed to pull model '{model}': {response}")
@@ -29,6 +32,6 @@ def ensure_model_exists(model: str) -> None:
 def summarize(model: str, text: str) -> str:
     prompt = PROMPT.format(text=text)
     response = ollama.generate(model, prompt)
-    if response and response['done']:
-        response = extract_response_after_think(response['response'])
+    if response and response["done"]:
+        response = extract_response_after_think(response["response"])
     return response
